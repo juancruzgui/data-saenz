@@ -1,6 +1,7 @@
 #Folders
 notebooks/
 data/
+model/
 
 #Enviroment
 .env
