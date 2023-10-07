@@ -6,8 +6,13 @@ REDDIT_KEY = os.environ.get('REDDIT_KEY')
 REDDIT_SECRET = os.environ.get('REDDIT_SECRET')
 
 ### VARIABLES ###
-
 CANDIDATES_FRONT = ["Sergio Massa", "Javier Milei", "Patricia Bullrich", "Myriam Bregman", "Juan Schiaretti"]
+
 CANDIDATES_LIST = ["massa", "milei", "bullrich", "bregman", "schiaretti"]
 
 SUBREDDITS = ["Argentina","RepublicaArgentina","ArgentinaBenderStyle","Republica_Argentina","AskArgentina"]
+
+DOMAINS = ['lanacion.com.ar', 'infobae.com', 'tn.com.ar', 'lavoz.com.ar', 'clarin.com',
+           'pagina12.com.ar', 'ambito.com', 'cronista.com', 'perfil.com', 'c5n.com', 'lacapital.com.ar']
+
+MODEL_PATH = os.environ.get('MODEL_PATH')
