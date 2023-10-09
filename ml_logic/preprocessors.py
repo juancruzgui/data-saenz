@@ -123,3 +123,44 @@ def process_raw_data(raw_data, candidate) -> pd.DataFrame:
     processed_data.drop(columns = 'index', inplace = True)
 
     return processed_data
+
+def process_sentiment_labels(df) -> pd.DataFrame:
+    df['label'] = df['label'].str.capitalize()
+    df['label'] = df['label'].replace({'Negative': 'Negativo',
+                                       'Others': 'Neutral',
+                                       'Positive': 'Positivo',
+                                       'Anger': 'Enojo',
+                                       'Joy': 'Alegria',
+                                       'Sadness': 'Tristeza',
+                                       'Disgust': 'Disgusto',
+                                       'Fear': 'Miedo',
+                                       'Surprise': 'Sorpresa'})
+    return df
+
+def get_insights(encoded_df):
+    # Defining the columns I want to ensure exist
+    columns_to_ensure = ['Neutral', 'Negativo', 'Positivo', 'Alegria', 'Sorpresa', 'Tristeza', 'Enojo', 'Disgusto', 'Miedo']
+
+    # Checking if the columns exist in the DataFrame
+    missing_columns = [col for col in columns_to_ensure if col not in encoded_df.columns]
+
+    # Adding missing columns with all False values
+    if missing_columns:
+        for col in missing_columns:
+            encoded_df[col] = False
+
+    final_df = encoded_df[encoded_df.score > 0.7].groupby('date').agg({'Negativo' : 'sum',
+                                                                        'Neutral' : 'sum',
+                                                                        'Positivo' : 'sum',
+                                                                        'Alegria' : 'sum',
+                                                                        'Sorpresa' : 'sum',
+                                                                        'Tristeza' : 'sum',
+                                                                        'Enojo' : 'sum',
+                                                                        'Disgusto' : 'sum',
+                                                                        'Miedo' : 'sum'})
+
+    final_df['total'] = final_df.Negativo + final_df.Neutral + final_df.Positivo + final_df.Alegria + final_df.Sorpresa + final_df.Tristeza + final_df.Enojo + final_df.Disgusto + final_df.Miedo
+
+    final_df['%Neg'], final_df['%Neu'], final_df['%Pos'], final_df['%Ale'], final_df['%Sor'], final_df['%Tri'], final_df['%Eno'], final_df['%Dis'], final_df['%Mie']  = final_df.Negativo/final_df.total, final_df.Neutral/final_df.total, final_df.Positivo/final_df.total, final_df.Alegria/final_df.total, final_df.Sorpresa/final_df.total, final_df.Tristeza/final_df.total, final_df.Enojo/final_df.total, final_df.Disgusto/final_df.total, final_df.Miedo/final_df.total
+
+    return final_df

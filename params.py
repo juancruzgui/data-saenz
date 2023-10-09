@@ -15,4 +15,5 @@ SUBREDDITS = ["Argentina","RepublicaArgentina","ArgentinaBenderStyle","Republica
 DOMAINS = ['lanacion.com.ar', 'infobae.com', 'tn.com.ar', 'lavoz.com.ar', 'clarin.com',
            'pagina12.com.ar', 'ambito.com', 'cronista.com', 'perfil.com', 'c5n.com', 'lacapital.com.ar']
 
-MODEL_PATH = os.environ.get('MODEL_PATH')
+MODEL_PATH_SENTIMENT = os.environ.get('MODEL_PATH_SENTIMENT')
+MODEL_PATH_EMOTION = os.environ.get('MODEL_PATH_EMOTION')

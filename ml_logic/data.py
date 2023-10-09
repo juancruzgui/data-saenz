@@ -87,7 +87,7 @@ def get_raw_reddits(subreddit, candidate, time_filter) -> pd.DataFrame:
                        'comments' : comments}).sort_values(by='date', ascending = False)
     return raw_data
 
-def get_clean_reddits(candidate, time) -> pd.DataFrame:
+def get_clean_reddits(candidate, time_filter) -> pd.DataFrame:
     """Getting clean data processed from reddit API.
 
     Keyword arguments:
@@ -100,7 +100,7 @@ def get_clean_reddits(candidate, time) -> pd.DataFrame:
     subreddit = SUBREDDITS
 
     for name in subreddit:
-        aux_df = pd.concat([aux_df, get_raw_reddits(name, candidate, time)], ignore_index = True)
+        aux_df = pd.concat([aux_df, get_raw_reddits(name, candidate, time_filter)], ignore_index = True)
 
     df = process_raw_data(aux_df, candidate)
     return df

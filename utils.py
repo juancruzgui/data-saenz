@@ -33,3 +33,9 @@ def get_label_score(model_pipeline, doc) -> tuple:
         score = None
 
     return label,score
+
+def find_candidate_fullname(candidate):
+    # using CANDIDATES_FRONT where I have the full name of the candidates, and the variable candidate where I have the last name
+    for cand in CANDIDATES_FRONT:
+        if candidate.capitalize() in cand:
+            return cand
