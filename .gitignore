@@ -2,6 +2,7 @@
 notebooks/
 data/
 model/
+imgs/
 
 #Enviroment
 .env

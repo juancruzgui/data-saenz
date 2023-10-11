@@ -1,31 +1,46 @@
 import pandas as pd
-import datetime
+from google.cloud import storage
+from params import *
+import io
 
-def save_insights(final_df, candidate):
-    """Saving insights locally from encoded_df and returning final_df if needed.
+def save_insights(df, candidate):
+    """Saving insights from GCS.
 
     Keyword arguments:
     encoded_df -- df with encoded labels
-    Return: final_df with insights
+    Return: None
     """
-    # saving final df to csv
-    today = datetime.datetime.today().strftime('%Y-%m-%d')
-    final_df.to_csv(f'data/{candidate}_insights_{today}.csv')
+    try:
+        print(f"\nSaving insights for {candidate}")
+        client = storage.Client()
+        bucket = client.get_bucket(BUCKET_NAME)
+        blob_csv = bucket.blob(f'{candidate}_insights.csv')
+        blob_csv.upload_from_string(df.to_csv(), content_type='text/csv')
+        print(f"\n✅ {candidate} insights saved to GCS")
+
+    except:
+        print(f"\n❌No insights found for {candidate}")
 
 
 def load_insights(candidate):
-    """Loading insights locally.
+    """Loading insights from GCS.
 
     Keyword arguments:
     candidate -- candidate name
-    Return: insights_df
+    Return: df with insights
     """
     try:
-        today = datetime.datetime.today().strftime('%Y-%m-%d')
-        insights_df = pd.read_csv(f'data/{candidate}_insights_{today}.csv')
-        print(f'Insights found for {candidate}')
+        print(f'\nLoading insights for {candidate}')
+        client = storage.Client()
+        bucket = client.get_bucket(BUCKET_NAME)
+        blob_csv = bucket.blob(f'{candidate}_insights.csv')
+        data_bytesio = blob_csv.download_as_bytes()
+
+        df = pd.read_csv(io.BytesIO(data_bytesio), index_col="date")
+
+        print(f'\n✅ Insights found for {candidate}')
 
     except:
-        print(f'No insights found for {candidate}')
+        print(f'\n❌ No insights found for {candidate}')
 
-    return insights_df
+    return df

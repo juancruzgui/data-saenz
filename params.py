@@ -1,4 +1,5 @@
 import os
+import datetime
 
 ### CREDENTIALS ###
 NEWS_KEY = os.environ.get('NEWS_KEY')
@@ -17,3 +18,7 @@ DOMAINS = ['lanacion.com.ar', 'infobae.com', 'tn.com.ar', 'lavoz.com.ar', 'clari
 
 MODEL_PATH_SENTIMENT = os.environ.get('MODEL_PATH_SENTIMENT')
 MODEL_PATH_EMOTION = os.environ.get('MODEL_PATH_EMOTION')
+
+TODAY = datetime.datetime.now().strftime("%Y-%m-%d")
+
+BUCKET_NAME = os.environ.get('BUCKET_NAME')
