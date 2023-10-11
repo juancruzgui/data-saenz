@@ -5,6 +5,7 @@ from ml_logic.model import *
 from ml_logic.preprocessors import *
 from ml_logic.encoders import *
 from ml_logic.registry import *
+from ml_logic.visualizations import plot_neg_pos
 import pandas as pd
 
 def analysis(candidate, time_filter) -> pd.DataFrame:
@@ -68,10 +69,16 @@ def analysis(candidate, time_filter) -> pd.DataFrame:
 
         return final_df
 
+def visualizations():
+    pass
+
 if __name__ == "__main__":
     ### the next flow should be executed once a day (23:50) ###
+    candidates_dfs = []
     for candidate in CANDIDATES_LIST:
-        analysis(candidate=candidate, time_filter='month')
+        df = analysis(candidate=candidate, time_filter='month')
+        plot_neg_pos(df, candidate)
+        candidates_dfs.append(df)
 
     # nexts steps:
     # get the insights from today and replace the insights CSV in GCS
