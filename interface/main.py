@@ -5,7 +5,7 @@ from ml_logic.model import *
 from ml_logic.preprocessors import *
 from ml_logic.encoders import *
 from ml_logic.registry import *
-from ml_logic.visualizations import plot_neg_pos
+from ml_logic.visualizations import plot_neg_pos, plot_bar_hor,stacked_bars
 import pandas as pd
 
 def analysis(candidate, time_filter) -> pd.DataFrame:
@@ -78,7 +78,10 @@ if __name__ == "__main__":
     for candidate in CANDIDATES_LIST:
         df = analysis(candidate=candidate, time_filter='month')
         plot_neg_pos(df, candidate)
+        plot_bar_hor(df, candidate)
         candidates_dfs.append(df)
+
+    stacked_bars(candidates_dfs)
 
     # nexts steps:
     # get the insights from today and replace the insights CSV in GCS
