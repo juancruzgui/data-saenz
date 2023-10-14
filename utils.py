@@ -1,4 +1,5 @@
 from params import *
+import pandas as pd
 
 def create_search_query(candidate_used, candidates) -> str:
     """Creating search binary query for news API.
@@ -39,3 +40,22 @@ def find_candidate_fullname(candidate):
     for cand in CANDIDATES_FRONT:
         if candidate.capitalize() in cand:
             return cand
+
+def merging_today_with_month_df(today_df, month_df):
+    """Merging the today_df with the month_df.
+
+    Keyword arguments:
+    today_df -- dataframe with today's data
+    month_df -- dataframe with the month's data
+    Return: merged_df
+    """
+    # deleting first row of month_df (It's the farthest date from today)
+    month_df = month_df.iloc[1:]
+
+    # keeping today's data from today_df
+    today_df = today_df.iloc[1:]
+
+    # merging today_df into the last row of df_month
+    df = pd.concat([month_df, today_df])
+
+    return df
