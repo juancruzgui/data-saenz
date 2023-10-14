@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
-from params import *
-import datetime
-from utils import find_candidate_fullname
+from sentiment_analysis.params import *
+from sentiment_analysis.utils import find_candidate_fullname
 import pandas as pd
 from io import BytesIO
 from google.cloud import storage

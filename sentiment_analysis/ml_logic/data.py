@@ -1,9 +1,7 @@
 import pandas as pd
-import requests
-import datetime
-from utils import *
-from ml_logic.preprocessors import *
-from params import *
+from sentiment_analysis.utils import *
+from sentiment_analysis.ml_logic.preprocessors import *
+from sentiment_analysis.params import *
 
 def get_raw_reddits(subreddit, candidate, time_filter) -> pd.DataFrame:
     """Getting raw data from reddit API.

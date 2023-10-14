@@ -1,6 +1,6 @@
 import pandas as pd
 from google.cloud import storage
-from params import *
+from sentiment_analysis.params import *
 import io
 
 def save_insights(df, candidate):
