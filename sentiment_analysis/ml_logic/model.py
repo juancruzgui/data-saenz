@@ -1,7 +1,7 @@
 from transformers import pipeline
 import pandas as pd
-from params import *
-from utils import *
+from sentiment_analysis.params import *
+from sentiment_analysis.utils import *
 
 def load_model(model_path, tokenizer=True):
     """Loading model from huggingface.

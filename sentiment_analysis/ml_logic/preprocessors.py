@@ -2,7 +2,7 @@ import re
 import datetime
 import pandas as pd
 import praw
-from params import *
+from sentiment_analysis.params import *
 
 def strip_texts(text) -> str:
     """Remove urls, numbers, and special characters from text.

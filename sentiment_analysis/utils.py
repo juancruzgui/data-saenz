@@ -1,4 +1,4 @@
-from params import *
+from sentiment_analysis.params import *
 import pandas as pd
 
 def create_search_query(candidate_used, candidates) -> str:

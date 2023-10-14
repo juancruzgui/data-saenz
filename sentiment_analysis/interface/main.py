@@ -1,11 +1,11 @@
-from params import *
-from utils import *
-from ml_logic.data import *
-from ml_logic.model import *
-from ml_logic.preprocessors import *
-from ml_logic.encoders import *
-from ml_logic.registry import *
-from ml_logic.visualizations import plot_neg_pos, plot_bar_hor,stacked_bars
+from sentiment_analysis.params import *
+from sentiment_analysis.utils import *
+from sentiment_analysis.ml_logic.data import *
+from sentiment_analysis.ml_logic.model import *
+from sentiment_analysis.ml_logic.preprocessors import *
+from sentiment_analysis.ml_logic.encoders import *
+from sentiment_analysis.ml_logic.registry import *
+from sentiment_analysis.ml_logic.visualizations import plot_neg_pos, plot_bar_hor,stacked_bars
 import pandas as pd
 
 def analysis_old(candidate, time_filter) -> pd.DataFrame:
@@ -69,7 +69,7 @@ def analysis_old(candidate, time_filter) -> pd.DataFrame:
 
         return final_df
 
-def analysis(candidate, time_filter='day'):
+def analysis(candidate, time_filter='day', model_loaded=False) -> pd.DataFrame:
     """
     Main function to run the complete analysis.
     Via GCS or running the whole analysis.
@@ -94,13 +94,14 @@ def analysis(candidate, time_filter='day'):
         # getting raw data
         processed_data = get_clean_reddits(candidate=candidate, time_filter='month')
 
-        print("⭐️ Loading models...")
-        print(f"First model: {MODEL_PATH_SENTIMENT}")
-        print(f"Second model: {MODEL_PATH_EMOTION}")
+        if model_loaded == False:
+            print("⭐️ Loading models...")
+            print(f"First model: {MODEL_PATH_SENTIMENT}")
+            print(f"Second model: {MODEL_PATH_EMOTION}")
 
-        # loading models
-        model_sentiment = load_model(MODEL_PATH_SENTIMENT, tokenizer=True)
-        model_emotion = load_model(MODEL_PATH_EMOTION, tokenizer=False)
+            # loading models
+            model_sentiment = load_model(MODEL_PATH_SENTIMENT, tokenizer=True)
+            model_emotion = load_model(MODEL_PATH_EMOTION, tokenizer=False)
 
         assert model_sentiment is not None
         assert model_emotion is not None
@@ -140,6 +141,8 @@ def analysis(candidate, time_filter='day'):
 
     # getting raw data
     processed_data = get_clean_reddits(candidate=candidate, time_filter=time_filter)
+
+
 
     print("📍 Loading models...")
     print(f"First model: {MODEL_PATH_SENTIMENT}")
