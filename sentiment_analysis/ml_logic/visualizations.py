@@ -16,7 +16,7 @@ def plot_neg_pos(df, candidate):
     # Configurar la primera fila con título y leyenda
     axes[0].axis('off')  # Desactivar ejes para la primera fila
     fig.text(0.5, 0.95, f'\nOpiniones Negativas y Positivas\nsobre {find_candidate_fullname(candidate)}', fontsize=40, ha='center', fontweight='bold', color='#121212')
-    fig.text(0.5, 0.91, 'En porcentaje de comentarios', fontsize=24, fontweight='light', ha='center', color='#121212')
+    fig.text(0.5, 0.91, 'En porcentaje de comentarios de los últimos 30 días', fontsize=24, fontweight='light', ha='center', color='#121212')
 
     colors= {
         'Negativo': 'red',
@@ -192,7 +192,7 @@ def stacked_bars(df_list):
     # Configurar la primera fila con título y leyenda
     axes[0].axis('off')  # Desactivar ejes para la primera fila
     fig.text(0.5, 0.95, '\nDistribución de Sentimientos sobre\ncandidatos a Presidente Argentinos', fontsize=40, ha='center', fontweight='bold', color='#121212')
-    fig.text(0.5, 0.91, 'En porcentaje de comentarios', fontsize=24, fontweight='light', ha='center', color='#121212')
+    fig.text(0.5, 0.91, 'En porcentaje de comentarios de los últimos 30 días', fontsize=24, fontweight='light', ha='center', color='#121212')
 
     # Añadir leyenda con colores personalizados, a modo de lista, debajo del título
     legend_handles = [plt.Rectangle((0, 0), 1, 1, color=color) for color in sentiment_colors.values()]
