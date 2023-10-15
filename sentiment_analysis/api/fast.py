@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from sentiment_analysis.interface.main import analysis, plot_neg_pos, plot_bar_hor, stacked_bars
+from sentiment_analysis.ml_logic.data import get_clean_reddits
 from sentiment_analysis.ml_logic.model import load_model
 from sentiment_analysis.params import *
 
@@ -23,6 +24,23 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
+
+@app.get("/test-reddit-api")
+def test_reddit() -> dict:
+    """
+    Test the reddit API
+    Returns:
+        dict: A message indicating the test is complete.
+    """
+    try:
+        print("\n⭐️ Use case: test the reddit API")
+
+        df = get_clean_reddits(candidate="milei", time_filter="day")
+
+        return {"message": "✅ Reddit API is working."}
+    except Exception as e:
+        print(e)
+        return {"message": "❌ Reddit API is not working."}
 
 @app.get("/analysis-update")
 def update() -> dict:
@@ -53,4 +71,5 @@ def root():
 
     return {"message": "Welcome to Data-Saenz API",
              "documentation": "/docs",
-             "analysis_url": "/analysis-update"}
+             "analysis_url": "/analysis-update",
+             "test_url": "/test-reddit-api"}
